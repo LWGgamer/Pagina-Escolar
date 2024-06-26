@@ -1,6 +1,6 @@
-# Agape Patos
+# Pagina Escolar
 
-Bem-vindo ao repositório **Agape Patos**! Este projeto é uma plataforma escolar online que visa facilitar a comunicação entre alunos, professores e pais, bem como organizar as atividades e informações escolares de maneira eficiente.
+Bem-vindo ao repositório **pagina Escolar**! Este projeto é uma plataforma escolar online que visa facilitar a comunicação entre alunos, professores e pais, bem como organizar as atividades e informações escolares de maneira eficiente.
 
 ## Funcionalidades
 
