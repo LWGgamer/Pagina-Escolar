@@ -1,9 +1,16 @@
 const mongoose = require('mongoose');
 
 const gradeSchema = new mongoose.Schema({
-    student: String,
-    subject: String,
-    grade: Number
+    student: {
+        type: String,
+        required: true
+    },
+    grade: {
+        type: Number,
+        required: true
+    }
 });
 
-module.exports = mongoose.model('Grade', gradeSchema);
+const Grade = mongoose.model('Grade', gradeSchema);
+
+module.exports = Grade;

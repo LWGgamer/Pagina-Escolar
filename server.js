@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Conexão com MongoDB Atlas
-const dbURI = 'mongodb+srv://lucaswggames:Zh6RvQHUGwR8c8cQ@cluster.mongodb.net/seu_banco?retryWrites=true&w=majority';
+const dbURI = 'mongodb+srv://lucaswggames:Zh6RvQHUGwR8c8cQ@teste.s9ecoec.mongodb.net/';
 mongoose.connect(dbURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
