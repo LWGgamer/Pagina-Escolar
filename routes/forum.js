@@ -25,9 +25,11 @@ router.post('/', async (req, res) => {
     });
 
     try {
+        console.log('Novo post recebido:', newPost); // Verifica se os dados do novo post estão corretos
         await newPost.save();
         res.status(201).send('Post adicionado com sucesso');
     } catch (error) {
+        console.error('Erro ao adicionar post:', error); // Verifica se há algum erro ao tentar salvar no banco de dados
         res.status(500).send('Erro ao adicionar post');
     }
 });

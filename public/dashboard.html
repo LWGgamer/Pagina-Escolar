@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Escola Azul</title>
+    <title>Dashboard - Ágape Patos</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -43,20 +43,30 @@
                 });
                 if (response.ok) {
                     location.reload();
+                } else {
+                    const errorMessage = await response.text();
+                    console.error('Erro ao adicionar postagem:', errorMessage);
                 }
             });
 
             async function loadPosts() {
-                const response = await fetch('/api/forum');
-                const posts = await response.json();
-                const forumPosts = document.getElementById('forumPosts');
-                forumPosts.innerHTML = posts.map(post => `
-                    <div class="post">
-                        <h4>${post.title}</h4>
-                        <p>${post.content}</p>
-                        <p><small>Autor: ${post.author.username}</small></p>
-                    </div>
-                `).join('');
+                try {
+                    const response = await fetch('/api/forum');
+                    if (!response.ok) {
+                        throw new Error('Erro ao carregar postagens');
+                    }
+                    const posts = await response.json();
+                    const forumPosts = document.getElementById('forumPosts');
+                    forumPosts.innerHTML = posts.map(post => `
+                        <div class="post">
+                            <h4>${post.title}</h4>
+                            <p>${post.content}</p>
+                            <p><small>Autor: ${post.author.username}</small></p>
+                        </div>
+                    `).join('');
+                } catch (error) {
+                    console.error('Erro ao carregar postagens:', error.message);
+                }
             }
 
             loadPosts();
