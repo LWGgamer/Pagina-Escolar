@@ -14,7 +14,7 @@
         <section class="forum">
             <h2>Gerenciar Fórum</h2>
             <div id="forumPosts"></div>
-            <form id="forumForm">
+            <form id="forumForm" action="./" method="get">
                 <h3>Adicionar Post</h3>
                 <label for="title">Título:</label>
                 <input type="text" id="title" name="title" required>
@@ -30,25 +30,34 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const forumForm = document.getElementById('forumForm');
+            const forumPosts = document.getElementById('forumPosts');
+
+            // Listener para adicionar uma nova postagem
             forumForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 const title = document.getElementById('title').value;
                 const content = document.getElementById('content').value;
-                const response = await fetch('/api/forum', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ title, content })
-                });
-                if (response.ok) {
-                    location.reload();
-                } else {
-                    const errorMessage = await response.text();
-                    console.error('Erro ao adicionar postagem:', errorMessage);
+                
+                try {
+                    const response = await fetch('/api/forum', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ title, content })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Erro ao adicionar postagem');
+                    }
+
+                    location.reload(); // Atualizar a página após adicionar a postagem
+                } catch (error) {
+                    console.error('Erro ao adicionar postagem:', error.message);
                 }
             });
 
+            // Função para carregar as postagens do fórum
             async function loadPosts() {
                 try {
                     const response = await fetch('/api/forum');
@@ -56,19 +65,48 @@
                         throw new Error('Erro ao carregar postagens');
                     }
                     const posts = await response.json();
-                    const forumPosts = document.getElementById('forumPosts');
-                    forumPosts.innerHTML = posts.map(post => `
-                        <div class="post">
-                            <h4>${post.title}</h4>
-                            <p>${post.content}</p>
-                            <p><small>Autor: ${post.author.username}</small></p>
-                        </div>
-                    `).join('');
+                    forumPosts.innerHTML = posts.map(post => createPostHTML(post)).join('');
                 } catch (error) {
                     console.error('Erro ao carregar postagens:', error.message);
                 }
             }
 
+            // Função auxiliar para criar o HTML de uma postagem
+            function createPostHTML(post) {
+                return `
+                    <div class="post">
+                        <h4>${post.title}</h4>
+                        <p>${post.content}</p>
+                        <p><small>Autor: ${post.author.username}</small></p>
+                        <button class="delete-post-btn" data-post-id="${post._id}">Excluir</button>
+                    </div>
+                `;
+            }
+
+            // Listener para excluir uma postagem
+            forumPosts.addEventListener('click', async function(e) {
+                if (e.target.classList.contains('delete-post-btn')) {
+                    const postId = e.target.dataset.postId;
+                    const confirmDelete = confirm('Tem certeza que deseja excluir esta postagem?');
+                    if (confirmDelete) {
+                        try {
+                            const response = await fetch(`/api/forum/${postId}`, {
+                                method: 'DELETE'
+                            });
+
+                            if (!response.ok) {
+                                throw new Error('Erro ao excluir postagem');
+                            }
+
+                            location.reload(); // Atualizar a página após excluir a postagem
+                        } catch (error) {
+                            console.error('Erro ao excluir postagem:', error.message);
+                        }
+                    }
+                }
+            });
+
+            // Carregar as postagens ao carregar a página
             loadPosts();
         });
     </script>

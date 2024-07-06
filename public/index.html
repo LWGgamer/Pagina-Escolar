@@ -7,8 +7,17 @@
     <link rel="stylesheet" href="css/styles.css">
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            fetch('/api/forum')
-                .then(response => response.json())
+           
+            fetch('/api/check-login')
+                .then(response => {
+                    if (response.ok) {
+                       
+                        return response.json();
+                    } else {
+                       
+                        window.location.href = '/login.html';
+                    }
+                })
                 .then(posts => {
                     const forumSection = document.querySelector('.forum');
                     forumSection.innerHTML = '<h2>Fórum Ágape Patos</h2>';
@@ -18,6 +27,11 @@
                         postElement.innerHTML = `<h3>${post.title}</h3><p>${post.content}</p><p><small>${post.author}</small></p>`;
                         forumSection.appendChild(postElement);
                     });
+                })
+                .catch(error => {
+                    console.error('Erro ao verificar login:', error);
+                   
+                    window.location.href = '/login.html';
                 });
         });
     </script>
@@ -28,13 +42,8 @@
     </header>
     <main>
         <section class="forum">
-            <h2>Fórum Ágape Patos</h2>
+            <!-- Fórum será carregado dinamicamente aqui -->
         </section>
-        <nav class="buttons">
-            <button onclick="location.href='notas.html'">Ver Notas</button>
-            <button onclick="location.href='calendario.html'">Ver Calendário</button>
-            <button onclick="location.href='atividades.html'">Ver Atividades</button>
-        </nav>
     </main>
     <footer>
         <p>&copy; 2024 Ágape Patos. Todos os direitos reservados.</p>

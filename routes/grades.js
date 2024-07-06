@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Grade = require('../models/grade');
 
-// GET all grades
 router.get('/', async (req, res) => {
     try {
         const grades = await Grade.find();
@@ -12,7 +11,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// POST create a new grade
+
 router.post('/', async (req, res) => {
     const grade = new Grade({
         student: req.body.student,

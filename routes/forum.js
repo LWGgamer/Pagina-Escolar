@@ -18,6 +18,8 @@ router.post('/', async (req, res) => {
     }
 
     const { title, content } = req.body;
+    console.log('Dados recebidos do formulário:', req.body); // Verifica se os dados do formulário estão sendo recebidos corretamente
+
     const newPost = new Forum({
         title,
         content,
@@ -25,7 +27,7 @@ router.post('/', async (req, res) => {
     });
 
     try {
-        console.log('Novo post recebido:', newPost); // Verifica se os dados do novo post estão corretos
+        console.log('Novo post a ser salvo:', newPost); // Verifica se o objeto newPost está correto antes de salvar
         await newPost.save();
         res.status(201).send('Post adicionado com sucesso');
     } catch (error) {
