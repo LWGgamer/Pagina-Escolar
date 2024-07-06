@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escola Azul</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('/api/forum')
+                .then(response => response.json())
+                .then(posts => {
+                    const forumSection = document.querySelector('.forum');
+                    forumSection.innerHTML = '<h2>Fórum Ágape Patos</h2>';
+                    posts.forEach(post => {
+                        const postElement = document.createElement('div');
+                        postElement.className = 'post';
+                        postElement.innerHTML = `<h3>${post.title}</h3><p>${post.content}</p><p><small>${post.author}</small></p>`;
+                        forumSection.appendChild(postElement);
+                    });
+                });
+        });
+    </script>
 </head>
 <body>
     <header>
@@ -13,7 +29,6 @@
     <main>
         <section class="forum">
             <h2>Fórum Ágape Patos</h2>
-            <p>Fofoca.</p>
         </section>
         <nav class="buttons">
             <button onclick="location.href='notas.html'">Ver Notas</button>
