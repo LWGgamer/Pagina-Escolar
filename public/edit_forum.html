@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Fórum - Escola Azul</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Editar Fórum - Ágape Patos</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Editar Fórum</h2>
+            <form id="forumForm" method="POST" action="/api/forum">
+                <label for="content">Conteúdo do Fórum:</label>
+                <textarea id="content" name="content" rows="10" cols="50"></textarea>
+                <button type="submit">Salvar</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Ágape Patos. Todos os direitos reservados.</p>
+        <nav>
+            <a href="dashboard.html">Voltar para o Dashboard</a>
+        </nav>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar - Escola Azul</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Registrar - Ágape Patos</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Registrar</h2>
+            <form id="registerForm" method="POST" action="/register">
+                <label for="username">Usuário:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Registrar</button>
+            </form>
+            <p>Já tem uma conta? <a href="login.html">Faça login aqui</a></p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Ágape Patos. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

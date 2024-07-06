@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Escola Azul</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Dashboard - Ágape Patos</h1>
+    </header>
+    <main>
+        <section class="forum">
+            <h2>Gerenciar Fórum</h2>
+            <div id="forumPosts"></div>
+            <form id="forumForm">
+                <h3>Adicionar Post</h3>
+                <label for="title">Título:</label>
+                <input type="text" id="title" name="title" required>
+                <label for="content">Conteúdo:</label>
+                <textarea id="content" name="content" required></textarea>
+                <button type="submit">Adicionar</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Ágape Patos. Todos os direitos reservados.</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const forumForm = document.getElementById('forumForm');
+            forumForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const title = document.getElementById('title').value;
+                const content = document.getElementById('content').value;
+                const response = await fetch('/api/forum', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ title, content })
+                });
+                if (response.ok) {
+                    location.reload();
+                }
+            });
+
+            async function loadPosts() {
+                const response = await fetch('/api/forum');
+                const posts = await response.json();
+                const forumPosts = document.getElementById('forumPosts');
+                forumPosts.innerHTML = posts.map(post => `
+                    <div class="post">
+                        <h4>${post.title}</h4>
+                        <p>${post.content}</p>
+                        <p><small>Autor: ${post.author.username}</small></p>
+                    </div>
+                `).join('');
+            }
+
+            loadPosts();
+        });
+    </script>
+</body>
+</html>
